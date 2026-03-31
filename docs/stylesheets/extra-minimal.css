@@ -1,0 +1,23 @@
+.md-nav {
+  font-size: 0.65rem;
+}
+
+.md-sidebar--secondary {
+  font-size: 0.6rem; /* Usually looks better slightly smaller than the left */
+}
+
+/* Specifically target the "Contents" header on the right */
+.md-nav--secondary .md-nav__title {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+}
+
+/* Styling the "Give feedback" button style */
+.md-header__topic {
+  font-weight: 700;
+}
+
+.md-typeset summary {
+  font-weight: bold;
+}
