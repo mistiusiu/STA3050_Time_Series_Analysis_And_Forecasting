@@ -1,4 +1,5 @@
 site_name: Seasonal ARIMA Forecasting
+site_url: https://mistiusiu.github.io/STA3050_Time_Series_Analysis_And_Forecasting/Seasonal%20ARIMA%20Model/
 theme:
   name: material
   palette:
