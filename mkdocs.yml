@@ -1,0 +1,65 @@
+site_name: Seasonal ARIMA Forecasting
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  logo: assets/usiu-logo.png
+  favicon: assets/usiu-logo.png
+  features:
+    - navigation.expand
+    - navigation.indexes       # Clickable section headers
+    - navigation.top           # "Back to top" button
+    - toc.follow 
+    - content.code.copy
+
+extra_css:
+  - stylesheets/extra-minimal.css
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+markdown_extensions:
+  # as before
+  - attr_list
+  - admonition
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.tasklist
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.arithmatex:
+      generic: true
+  - toc:
+      title: "CONTENTS"
+
+plugins:
+  - search
+  - obsidian-bridge:
+      # This handles the [[WikiLinks]] automatically
+      warn_on_invalid_links: true
+  - callouts # Converts > [!info] to MkDocs admonitions
+
+extra:
+  generator: false
+
+copyright: Copyright &copy; 2026 STA3050 SS26 USIU - Africa
