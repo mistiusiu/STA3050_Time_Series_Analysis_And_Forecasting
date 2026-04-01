@@ -11,6 +11,303 @@ B^{2}x_t = x_{t-2}
 
 The backshift operator exists as a mathematical notation that exists for the sake of convenience of denotation.
 
+## Method of Telescoping Sums
+
+Let the partial sum $S_n$​ be the sum of the first n terms of the geometric series:
+
+
+<div class="arithmatex">
+\[
+S_n = 1 + \phi + \phi^2 + \phi^3 + \dots + \phi^{n-1}
+\]
+</div>
+
+
+Multiply the entire equation by $\phi$:
+
+
+<div class="arithmatex">
+\[
+\phi S_n = \phi + \phi^2 + \phi^3 + \phi^4 + \dots + \phi^n
+\]
+</div>
+
+
+Subtract the two equations:
+
+
+<div class="arithmatex">
+\[
+S_n - \phi S_n = (1 + \phi + \phi^2 + \dots + \phi^{n-1}) - (\phi + \phi^2 + \dots + \phi^n)
+\]
+</div>
+
+
+<div class="arithmatex">
+\[
+S_n(1 - \phi) = 1 - \phi^n
+\]
+</div>
+
+
+Solve for $S_n$ by dividing both sides by $(1 - \phi)$:
+
+
+<div class="arithmatex">
+\[
+S_n = \frac{1 - \phi^n}{1 - \phi}
+\]
+</div>
+
+
+Take the limit as $n \to \infty$. Note that $|\phi| < 1$.
+
+
+<div class="arithmatex">
+\[
+\lim_{n \to \infty} \phi^n = 0
+\]
+</div>
+
+
+<div class="arithmatex">
+\[
+S_{\infty} = \frac{1 - 0}{1 - \phi} = \frac{1}{1 - \phi}
+\]
+</div>
+
+
+Multiply with the constant $c$.
+
+
+<div class="arithmatex">
+\[
+c \times \frac{1}{1 - \phi} = \frac{c}{1 - \phi}
+\]
+</div>
+
+
+## White Noise
+
+In every model the white noise $\epsilon_t$ is modeled as a normal distribution with:
+
+
+<div class="arithmatex">
+\[
+E[ε_t] = 0
+\]
+</div>
+
+
+<div class="arithmatex">
+\[
+Var(\epsilon_t) = \sigma^2
+\]
+</div>
+
+
+<div class="arithmatex">
+\[
+Cov(ε_t, ε_s) = 0\ for\ t ≠ s
+\]
+</div>
+
+
+This effectively means that in the long run when proving theoretical representations of models its effect is effectually zero. In practice, however, it contributes but at the end of the simulation yields a net zero effect. For example, the values of $\epsilon_t$ yielded for a simulation in an idealistic theoretical case would be `[+2, -5, +3, -6, +6]`. However, in real world data this is not the case.
+
+In real world data, the property of an expected value of zero represents that the white noise is unbiased. Its effect is a purely random shock present from the constant time independent value $\sigma^2$. The white noise represents the stochastic shocks that drive the variance in the system. It determines the uncertainty in the model but does not shift the center. It prevents the model from converging at a static constant.
+
+### Negating White Noise in AR Model
+
+Without these shocks an $AR(1)$ model with $\phi=0.5$ would decay to the mean of the series $\mu$ and stay there forever. 
+
+
+<div class="arithmatex">
+\[
+Y_t = c + \phi Y_{t-1} + \epsilon_t
+\]
+</div>
+
+
+<div class="arithmatex">
+\[
+Y_1 = c + \phi Y_0
+\]
+</div>
+
+
+<div class="arithmatex">
+\[
+Y_2 = c + \phi(c + \phi Y_0) = c + c\phi + \phi^2 Y_0
+\]
+</div>
+
+
+<div class="arithmatex">
+\[
+Y_3 = c + \phi(c + c\phi + \phi^2 Y_0) = c + c\phi + c\phi^2 + \phi^3 Y_0
+\]
+</div>
+
+The general form becomes:
+
+
+<div class="arithmatex">
+\[
+Y_t = c \sum_{i=0}^{t-1} \phi^i + \phi^t Y_0
+\]
+</div>
+
+ Since the process is stationary $(|\phi| < 1)$ as $t \to \infty$:
+
+
+<div class="arithmatex">
+\[
+\lim_{t \to \infty} \phi^t Y_0 = 0
+\]
+</div>
+
+
+<div class="arithmatex">
+\[
+\lim_{t \to \infty} c \sum_{i=0}^{t-1} \phi^i = \frac{c}{1 - \phi}
+\]
+</div>
+
+ This causes the deterministic long run mean:
+
+
+<div class="arithmatex">
+\[
+\mu = \frac{c}{1 - \phi}
+\]
+</div>
+
+
+The convergence of the series is the [[Mathematical Proofs#Method of Telescoping Sums|Method of Telescoping Sums]].
+
+### Vieta's Formulas for AR(2) Model
+
+If a polynomial has roots $z_1$ and $z_2$ then it can be written as a product of its powers. Given the equation for $AR(2)$ starts with 1 $1 - \phi_1B - \phi_2B^2 = 0$ it is written as:
+
+
+<div class="arithmatex">
+\[
+(1 - \frac{1}{z_1}B)(1 - \frac{1}{z_2}B) = 0
+\]
+</div>
+
+
+Expanding the factors:
+
+
+<div class="arithmatex">
+\[
+1 - \frac{1}{z_2}B - \frac{1}{z_1}B + (\frac{1}{z_1})(\frac{1}{z_2})B^2 = 0
+\]
+</div>
+
+
+<div class="arithmatex">
+\[
+1 - (\frac{1}{z_1} + \frac{1}{z_2})B + (\frac{1}{z_1 z_2})B^2 = 0
+\]
+</div>
+
+
+Matching the coefficients:
+
+
+<div class="arithmatex">
+\[
+1 - \phi_1 B - \phi_2 B^2
+\]
+</div>
+
+
+<div class="arithmatex">
+\[
+\phi_1 = \frac{1}{z_1} + \frac{1}{z_2}
+\]
+</div>
+
+
+<div class="arithmatex">
+\[
+\phi_2 = -\frac{1}{z_1 z_2}
+\]
+</div>
+
+This links to stationarity since for the distribution to be stationary both $|z_1|$, $|z_2| > 1$ (roots outside the unit circle) this forces the reciprocals 
+
+
+<div class="arithmatex">
+\[
+|\frac{1}{z_1}|, |\frac{1}{z_2}| < 1
+\]
+</div>
+
+Since $\phi_2$ is the negative product of these fractions
+
+<div class="arithmatex">
+\[
+|\phi_2| < 1
+\]
+</div>
+
+
+## Equivalence of Centered and Non-Centered AR(1)
+
+The centered form
+
+
+<div class="arithmatex">
+\[
+(1 - \phi_1 B)(Y_t - \mu) = \epsilon_t
+\]
+</div>
+
+When expanded becomes
+
+
+<div class="arithmatex">
+\[
+Y_t - \mu - \phi_1 Y_{t-1} + \phi_1 \mu = \epsilon_t
+\]
+</div>
+
+By isolating $Y_t$
+
+
+<div class="arithmatex">
+\[
+Y_t: Y_t = \mu(1 - \phi_1) + \phi_1 Y_{t-1} + \epsilon_t
+\]
+</div>
+
+Comparing with the non-centered form
+
+
+<div class="arithmatex">
+\[
+Y_t = c + \phi_1 Y_{t-1} + \epsilon_t
+\]
+</div>
+
+From the [[Mathematical Proofs#Negating White Noise in AR Model|deterministic long run mean]]
+
+
+<div class="arithmatex">
+\[
+c = \mu(1 - \phi_1)
+\]
+</div>
+
+
+## Orders in Statistics
+
+In algebra the phrase *"order"* refers to exponentiation ($X^2$, $X^3$) but in statistics and time series **polynomial order** refers to power ($X^n$) while **autoregressive order** refers to the lag distance $X_{t-n}$ .
+
 ## Differencing
 ### Seasonal Differencing
 

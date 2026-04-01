@@ -1,6 +1,6 @@
 # Seasonal ARIMA (SARIMA) Forecasting
 
-Welcome to our group presentation on **SARIMA*- modeling. This documentation covers the theoretical foundations, mathematical proofs, and the integrated components required to forecast seasonal time series data.
+Welcome to our group presentation on SARIMA modeling. This documentation covers the theoretical foundations, mathematical proofs, and the integrated components required to forecast seasonal time series data.
 
 ## Presentation Roadmap
 

@@ -64,11 +64,77 @@ ARIMA(p, d, q) \times (P, D, Q)S
 \]
 </div>
 
+$p$ = non-seasonal AR order   
+$d$ = non-seasonal differencing   
+$q$ = non-seasonal MA order   
+$P$ = seasonal AR order    
+$D$ = seasonal differencing    
+$Q$ = seasonal MA order   
+$S$  = time span of repeating seasonal pattern    
 
-### Resources
-[PSU Stat 510 Seasonal Models](https://online.stat.psu.edu/stat510/Lesson04)   
-[Introduction to SARIMA Model](https://medium.com/@ritusantra/introduction-to-sarima-model-cbb885ceabe8)   
-[PSU STAT 510](https://online.stat.psu.edu/stat510/)   
-[Time Series Analysis using ARIMA & SARIMA](https://www.kaggle.com/code/pratyushakar/time-series-analysis-using-arima-sarima)   
-[Rossman Store Sales](https://www.kaggle.com/c/rossmann-store-sales)    
+The Seasonal ARIMA model is two separate ARIMA models multiplied together. The first one handles the relationship between two consecutive points (months for our mango sales) and the other handles the same points across seasons (years for our mango sales).
+
+The aim of the SARIMA model is to effectively locate coefficients that turn the data into uncorrelated white noise.
+
+In the case where there is no differencing parameter achieving such an operation will cause:
+
+
+<div class="arithmatex">
+\[
+AR\ Side \times Data = MA\ Side \times Noise
+\]
+</div>
+
+By passing the data though an autoregressive filter it subtracts out everything that can be predicted from the past leaving behind the unpredictable parts of the data. By adding the memory of past shocks to the pure white noise $\epsilon_t$ this causes structured randomness to result. If the two sides are equal then the model has accounted for every pattern in the data, leaving only the unaccountable noise.
+
+The Data ($Y_t$) is modeled as filtered noise being a weighted collection of current and past random shocks.
+
+
+<div class="arithmatex">
+\[
+Y_t = \frac{MA\ Side}{AR\ Side} \times Noise
+\]
+</div>
+
+We could also solve for the noise:
+
+
+<div class="arithmatex">
+\[
+\epsilon_t = \frac{MA\ Side}{AR\ Side} \times Y_t
+\]
+</div>
+
+The mathematical notation for the AR and MA sides is:
+
+
+<div class="arithmatex">
+\[
+\underbrace{\Phi_P(B^S) \phi_p(B)}_{\text{Combined AR}} (Y_t - \mu) = \underbrace{\Theta_Q(B^S) \theta_q(B)}_{\text{Combined MA}} \epsilon_t
+\]
+</div>
+
+
+| Component           | Algebraic Operator | What it represents                                               |
+| :------------------ | :----------------- | :--------------------------------------------------------------- |
+| **Non-seasonal AR** | $\phi_p(B)$        | $(1 - \phi_1 B - \phi_2 B^2 - \dots - \phi_p B^p)$               |
+| **Seasonal AR**     | $\Phi_P(B^S)$      | $(1 - \Phi_1 B^S - \Phi_2 B^{2S} - \dots - \Phi_P B^{PS})$       |
+| **Non-seasonal MA** | $\theta_q(B)$      | $(1 + \theta_1 B + \theta_2 B^2 + \dots + \theta_q B^q)$         |
+| **Seasonal MA**     | $\Theta_Q(B^S)$    | $(1 + \Theta_1 B^S + \Theta_2 B^{2S} + \dots + \Theta_Q B^{QS})$ |
+
+Note that in this notation there is no constant $c$. This occurs from the choice to subtract $\mu$ from the data. This centers the data enabling easier computations (working with as series with a mean of 0 is easier) and not requiring the constant $c$ to be carried in all computations. The [[Mathematical Proofs#Equivalence of Centered and Non-Centered AR(1)|equivalence of the centered and non-centered AR]]  causes:
+
+
+<div class="arithmatex">
+\[
+\phi(B)(Y_t - \mu) = \epsilon_t
+\]
+</div>
+
+
+<div class="arithmatex">
+\[
+\phi(B)Y_t = c + \epsilon_t
+\]
+</div>
 

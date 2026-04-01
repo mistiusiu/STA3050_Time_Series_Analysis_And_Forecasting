@@ -1,0 +1,5 @@
+[PSU Stat 510 Seasonal Models](https://online.stat.psu.edu/stat510/Lesson04)   
+[Introduction to SARIMA Model](https://medium.com/@ritusantra/introduction-to-sarima-model-cbb885ceabe8)   
+[PSU STAT 510](https://online.stat.psu.edu/stat510/)   
+[Time Series Analysis using ARIMA & SARIMA](https://www.kaggle.com/code/pratyushakar/time-series-analysis-using-arima-sarima)   
+[Rossman Store Sales](https://www.kaggle.com/c/rossmann-store-sales)    
