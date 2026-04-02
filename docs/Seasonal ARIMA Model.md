@@ -70,6 +70,20 @@ The partial autocorrelation function (PACF) measures the direct correlation betw
 
 If data has seasonality, the PACF will exhibit significant spikes at seasonal lags ($S$, $2S$, $3S$). For the mango sales data ($S = 12$), this means strong spikes at lags 12 and 24. A gradual decay in the seasonal lags suggests seasonal non-stationarity of the data requiring seasonal differencing ($D$). A sharp cutoff at seasonal lags suggests the presence of a seasonal AR component ($P$). The identified AR order that will remove the non-seasonal and seasonal non stationary effects is the last lag before the PACF spikes "cut off" and hit the blue significance zone. Hence, ACF is used to identify the non-seasonal MA order ($p$) at early lags and the seasonal MA order ($P$) at seasonal lags.
 
+To illustrate this $MA(1)$ and $MA(2)$ models will be simulated.
+
+![Simulated MA(1) data](https://online.stat.psu.edu/stat510/Lesson02_files/figure-html/fig-simulatedMA1-1.png)
+
+The ACF plot is
+
+![ACF for simulated MA(1) data](https://online.stat.psu.edu/stat510/Lesson02_files/figure-html/fig-ACFsimulated-1.png)
+
+For $MA(2)$
+
+![Simulated MA(2) Series](https://online.stat.psu.edu/stat510/Lesson02_files/figure-html/fig-simulatedtimeseries-1.png)
+
+![ACF for simulated MA(2) Data](https://online.stat.psu.edu/stat510/Lesson02_files/figure-html/fig-ACFforma2-1.png)
+
 ## Model Notation
 
 Seasonal and non-seasonal components are incorporated in a multiplicative model.
