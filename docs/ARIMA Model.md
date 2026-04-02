@@ -1,0 +1,1 @@
+The integrated component $I$ is used to handle the trend in the data. An $ARIMA(1, 1, 1)$ has one AR term and one MA term is being applied to the variable $Z = X_t - X_{t-1}$. This handles a linear trend in the data. Extrapolating to $d = 2$ the variable analyzed is $z_t = (x_t - x_{t-1}) - (x_{t-1} - x_{t-2})$. Effectively handling a quadratic trend.
