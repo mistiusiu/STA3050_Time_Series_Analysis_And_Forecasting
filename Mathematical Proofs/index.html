@@ -1,0 +1,1547 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://mistiusiu.github.io/STA3050_Time_Series_Analysis_And_Forecasting/Seasonal%20ARIMA%20Model/Mathematical%20Proofs/">
+      
+      
+        <link rel="prev" href="../MA%20Model/">
+      
+      
+        <link rel="next" href="../References/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/usiu-logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Mathematical Proofs - Seasonal ARIMA Forecasting</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra-minimal.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#backshift-operator" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Seasonal ARIMA Forecasting" class="md-header__button md-logo" aria-label="Seasonal ARIMA Forecasting" data-md-component="logo">
+      
+  <img src="../assets/usiu-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Seasonal ARIMA Forecasting
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Mathematical Proofs
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Seasonal ARIMA Forecasting" class="md-nav__button md-logo" aria-label="Seasonal ARIMA Forecasting" data-md-component="logo">
+      
+  <img src="../assets/usiu-logo.png" alt="logo">
+
+    </a>
+    Seasonal ARIMA Forecasting
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AR%20Model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AR Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARIMA%20Model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ARIMA Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARMA%20Model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ARMA Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MA%20Model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MA Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mathematical Proofs
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mathematical Proofs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="CONTENTS">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      CONTENTS
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#backshift-operator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backshift Operator
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invertibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Invertibility
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#method-of-telescoping-sums" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Method of Telescoping Sums
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#white-noise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        White Noise
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="White Noise">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#negating-white-noise-in-ar-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Negating White Noise in AR Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vietas-formulas-for-ar2-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vieta's Formulas for AR(2) Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#equivalence-of-centered-and-non-centered-ar1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Equivalence of Centered and Non-Centered AR(1)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#orders-in-statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Orders in Statistics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#differencing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Differencing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Differencing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#seasonal-differencing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Seasonal Differencing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-stationary-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Non - Stationary Series
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Non - Stationary Series">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mean
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stationarity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stationarity
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Stationarity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#technical-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Technical Definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#laypersons-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layperson's Definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../References/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Seasonal%20ARIMA%20Model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seasonal ARIMA Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="CONTENTS">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      CONTENTS
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#backshift-operator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backshift Operator
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invertibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Invertibility
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#method-of-telescoping-sums" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Method of Telescoping Sums
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#white-noise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        White Noise
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="White Noise">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#negating-white-noise-in-ar-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Negating White Noise in AR Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vietas-formulas-for-ar2-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vieta's Formulas for AR(2) Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#equivalence-of-centered-and-non-centered-ar1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Equivalence of Centered and Non-Centered AR(1)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#orders-in-statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Orders in Statistics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#differencing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Differencing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Differencing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#seasonal-differencing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Seasonal Differencing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-stationary-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Non - Stationary Series
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Non - Stationary Series">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mean
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stationarity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stationarity
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Stationarity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#technical-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Technical Definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#laypersons-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layperson's Definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Mathematical Proofs</h1>
+
+<h2 id="backshift-operator">Backshift Operator</h2>
+<p>The Backshift operator <span class="arithmatex">\(B^n\)</span> mathematically denotes the <span class="arithmatex">\(n^{th}\)</span> value that precedes the current value. When examining the sales of mangos aggregated by month to denote the sales of two months ago (January 2026) given the current month is March 2026, <span class="arithmatex">\(B^{2}x_t\)</span> is used. With:</p>
+<div class="arithmatex">
+\[
+B^{2}x_t = x_{t-2}
+\]
+</div>
+
+<p>The backshift operator exists as a mathematical notation that exists for the sake of convenience of denotation.</p>
+<h2 id="invertibility">Invertibility</h2>
+<h2 id="method-of-telescoping-sums">Method of Telescoping Sums</h2>
+<p>Let the partial sum <span class="arithmatex">\(S_n\)</span>​ be the sum of the first n terms of the geometric series:</p>
+<div class="arithmatex">
+\[
+S_n = 1 + \phi + \phi^2 + \phi^3 + \dots + \phi^{n-1}
+\]
+</div>
+
+<p>Multiply the entire equation by <span class="arithmatex">\(\phi\)</span>:</p>
+<div class="arithmatex">
+\[
+\phi S_n = \phi + \phi^2 + \phi^3 + \phi^4 + \dots + \phi^n
+\]
+</div>
+
+<p>Subtract the two equations:</p>
+<div class="arithmatex">
+\[
+S_n - \phi S_n = (1 + \phi + \phi^2 + \dots + \phi^{n-1}) - (\phi + \phi^2 + \dots + \phi^n)
+\]
+</div>
+
+<div class="arithmatex">
+\[
+S_n(1 - \phi) = 1 - \phi^n
+\]
+</div>
+
+<p>Solve for <span class="arithmatex">\(S_n\)</span> by dividing both sides by <span class="arithmatex">\((1 - \phi)\)</span>:</p>
+<div class="arithmatex">
+\[
+S_n = \frac{1 - \phi^n}{1 - \phi}
+\]
+</div>
+
+<p>Take the limit as <span class="arithmatex">\(n \to \infty\)</span>. Note that <span class="arithmatex">\(|\phi| &lt; 1\)</span>.</p>
+<div class="arithmatex">
+\[
+\lim_{n \to \infty} \phi^n = 0
+\]
+</div>
+
+<div class="arithmatex">
+\[
+S_{\infty} = \frac{1 - 0}{1 - \phi} = \frac{1}{1 - \phi}
+\]
+</div>
+
+<p>Multiply with the constant <span class="arithmatex">\(c\)</span>.</p>
+<div class="arithmatex">
+\[
+c \times \frac{1}{1 - \phi} = \frac{c}{1 - \phi}
+\]
+</div>
+
+<h2 id="white-noise">White Noise</h2>
+<p>In every model the white noise <span class="arithmatex">\(\epsilon_t\)</span> is modeled as a normal distribution with:</p>
+<div class="arithmatex">
+\[
+E[ε_t] = 0
+\]
+</div>
+
+<div class="arithmatex">
+\[
+Var(\epsilon_t) = \sigma^2
+\]
+</div>
+
+<div class="arithmatex">
+\[
+Cov(ε_t, ε_s) = 0\ for\ t ≠ s
+\]
+</div>
+
+<p>This effectively means that in the long run when proving theoretical representations of models its effect is effectually zero. In practice, however, it contributes but at the end of the simulation yields a net zero effect. For example, the values of <span class="arithmatex">\(\epsilon_t\)</span> yielded for a simulation in an idealistic theoretical case would be <code>[+2, -5, +3, -6, +6]</code>. However, in real world data this is not the case.</p>
+<p>In real world data, the property of an expected value of zero represents that the white noise is unbiased. Its effect is a purely random shock present from the constant time independent value <span class="arithmatex">\(\sigma^2\)</span>. The white noise represents the stochastic shocks that drive the variance in the system. It determines the uncertainty in the model but does not shift the center. It prevents the model from converging at a static constant.</p>
+<h3 id="negating-white-noise-in-ar-model">Negating White Noise in AR Model</h3>
+<p>Without these shocks an <span class="arithmatex">\(AR(1)\)</span> model with <span class="arithmatex">\(\phi=0.5\)</span> would decay to the mean of the series <span class="arithmatex">\(\mu\)</span> and stay there forever. </p>
+<div class="arithmatex">
+\[
+Y_t = c + \phi Y_{t-1} + \epsilon_t
+\]
+</div>
+
+<div class="arithmatex">
+\[
+Y_1 = c + \phi Y_0
+\]
+</div>
+
+<div class="arithmatex">
+\[
+Y_2 = c + \phi(c + \phi Y_0) = c + c\phi + \phi^2 Y_0
+\]
+</div>
+
+<div class="arithmatex">
+\[
+Y_3 = c + \phi(c + c\phi + \phi^2 Y_0) = c + c\phi + c\phi^2 + \phi^3 Y_0
+\]
+</div>
+
+<p>The general form becomes:</p>
+<div class="arithmatex">
+\[
+Y_t = c \sum_{i=0}^{t-1} \phi^i + \phi^t Y_0
+\]
+</div>
+
+<p>Since the process is stationary <span class="arithmatex">\((|\phi| &lt; 1)\)</span> as <span class="arithmatex">\(t \to \infty\)</span>:</p>
+<div class="arithmatex">
+\[
+\lim_{t \to \infty} \phi^t Y_0 = 0
+\]
+</div>
+
+<div class="arithmatex">
+\[
+\lim_{t \to \infty} c \sum_{i=0}^{t-1} \phi^i = \frac{c}{1 - \phi}
+\]
+</div>
+
+<p>This causes the deterministic long run mean:</p>
+<div class="arithmatex">
+\[
+\mu = \frac{c}{1 - \phi}
+\]
+</div>
+
+<p>The convergence of the series is the <a href="./#method-of-telescoping-sums">method of telescoping sums</a>.</p>
+<h3 id="vietas-formulas-for-ar2-model">Vieta's Formulas for AR(2) Model</h3>
+<p>If a polynomial has roots <span class="arithmatex">\(z_1\)</span> and <span class="arithmatex">\(z_2\)</span> then it can be written as a product of its powers. Given the equation for <span class="arithmatex">\(AR(2)\)</span> starts with 1 <span class="arithmatex">\(1 - \phi_1B - \phi_2B^2 = 0\)</span> it is written as:</p>
+<div class="arithmatex">
+\[
+(1 - \frac{1}{z_1}B)(1 - \frac{1}{z_2}B) = 0
+\]
+</div>
+
+<p>Expanding the factors:</p>
+<div class="arithmatex">
+\[
+1 - \frac{1}{z_2}B - \frac{1}{z_1}B + (\frac{1}{z_1})(\frac{1}{z_2})B^2 = 0
+\]
+</div>
+
+<div class="arithmatex">
+\[
+1 - (\frac{1}{z_1} + \frac{1}{z_2})B + (\frac{1}{z_1 z_2})B^2 = 0
+\]
+</div>
+
+<p>Matching the coefficients:</p>
+<div class="arithmatex">
+\[
+1 - \phi_1 B - \phi_2 B^2
+\]
+</div>
+
+<div class="arithmatex">
+\[
+\phi_1 = \frac{1}{z_1} + \frac{1}{z_2}
+\]
+</div>
+
+<div class="arithmatex">
+\[
+\phi_2 = -\frac{1}{z_1 z_2}
+\]
+</div>
+
+<p>This links to stationarity since for the distribution to be stationary both <span class="arithmatex">\(|z_1|\)</span>, <span class="arithmatex">\(|z_2| &gt; 1\)</span> (roots outside the unit circle) this forces the reciprocals </p>
+<div class="arithmatex">
+\[
+|\frac{1}{z_1}|, |\frac{1}{z_2}| < 1
+\]
+</div>
+
+<p>Since <span class="arithmatex">\(\phi_2\)</span> is the negative product of these fractions</p>
+<div class="arithmatex">
+\[
+|\phi_2| < 1
+\]
+</div>
+
+<h2 id="equivalence-of-centered-and-non-centered-ar1">Equivalence of Centered and Non-Centered AR(1)</h2>
+<p>The centered form</p>
+<div class="arithmatex">
+\[
+(1 - \phi_1 B)(Y_t - \mu) = \epsilon_t
+\]
+</div>
+
+<p>When expanded becomes</p>
+<div class="arithmatex">
+\[
+Y_t - \mu - \phi_1 Y_{t-1} + \phi_1 \mu = \epsilon_t
+\]
+</div>
+
+<p>By isolating <span class="arithmatex">\(Y_t\)</span></p>
+<div class="arithmatex">
+\[
+Y_t: Y_t = \mu(1 - \phi_1) + \phi_1 Y_{t-1} + \epsilon_t
+\]
+</div>
+
+<p>Comparing with the non-centered form</p>
+<div class="arithmatex">
+\[
+Y_t = c + \phi_1 Y_{t-1} + \epsilon_t
+\]
+</div>
+
+<p>From the <a href="./#negating-white-noise-in-ar-model">deterministic long run mean</a></p>
+<div class="arithmatex">
+\[
+c = \mu(1 - \phi_1)
+\]
+</div>
+
+<h2 id="orders-in-statistics">Orders in Statistics</h2>
+<p>In algebra the phrase <em>"order"</em> refers to exponentiation (<span class="arithmatex">\(X^2\)</span>, <span class="arithmatex">\(X^3\)</span>) but in statistics and time series <strong>polynomial order</strong> refers to power (<span class="arithmatex">\(X^n\)</span>) while <strong>autoregressive order</strong> refers to the lag distance <span class="arithmatex">\(X_{t-n}\)</span> .</p>
+<h2 id="differencing">Differencing</h2>
+<h3 id="seasonal-differencing">Seasonal Differencing</h3>
+<p>In non-stationary data where there is seasonality, the sales of mangos in the Kenyan market for example there is a peak from January to March and a corresponding dip during the remaining months. Seasonal differencing uncovers the span of time it takes for this pattern to repeat (12 months in this case) and shifts the focus from "How much did I sell?" which yields a non-stationary distribution to "How much more or less did I sell compared to the same time last year?" which yields a stationary distribution. Seasonal differencing performs the simple subtraction of (given <code>S = 12</code>):</p>
+<div class="arithmatex">
+\[
+x_t - x_{t-12}
+\]
+</div>
+
+<p>It subtracts the value this year with the value last year. If the sales in January 2024 were 900 (in thousands of Kenyan shillings) and the sales in January 2025 were 900 (in thousands of Kenyan shillings) then the differenced value is 0. In a more realistic scenario the sales in the January time slice from 2001 to 2010 could be:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Year</th>
+<th style="text-align: left;">Month</th>
+<th style="text-align: left;">Raw Jan Sales</th>
+<th style="text-align: left;">Seasonal Difference</th>
+<th style="text-align: left;">Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">2001</td>
+<td style="text-align: left;">Jan</td>
+<td style="text-align: left;">800</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">Baseline</td>
+</tr>
+<tr>
+<td style="text-align: left;">2002</td>
+<td style="text-align: left;">Jan</td>
+<td style="text-align: left;">815</td>
+<td style="text-align: left;"><strong>+15</strong></td>
+<td style="text-align: left;">Slight growth</td>
+</tr>
+<tr>
+<td style="text-align: left;">2003</td>
+<td style="text-align: left;">Jan</td>
+<td style="text-align: left;">828</td>
+<td style="text-align: left;"><strong>+13</strong></td>
+<td style="text-align: left;">Consistent growth</td>
+</tr>
+<tr>
+<td style="text-align: left;">2004</td>
+<td style="text-align: left;">Jan</td>
+<td style="text-align: left;">845</td>
+<td style="text-align: left;"><strong>+17</strong></td>
+<td style="text-align: left;">Constant Mean <span class="arithmatex">\(\approx\)</span> 15</td>
+</tr>
+<tr>
+<td style="text-align: left;">2005</td>
+<td style="text-align: left;">Jan</td>
+<td style="text-align: left;">858</td>
+<td style="text-align: left;"><strong>+13</strong></td>
+<td style="text-align: left;">Constant Variance</td>
+</tr>
+<tr>
+<td style="text-align: left;">2006</td>
+<td style="text-align: left;">Jan</td>
+<td style="text-align: left;">875</td>
+<td style="text-align: left;"><strong>+17</strong></td>
+<td style="text-align: left;">Stationary Noise</td>
+</tr>
+<tr>
+<td style="text-align: left;">2007</td>
+<td style="text-align: left;">Jan</td>
+<td style="text-align: left;">890</td>
+<td style="text-align: left;"><strong>+15</strong></td>
+<td style="text-align: left;">Independent of <span class="arithmatex">\(t\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">2008</td>
+<td style="text-align: left;">Jan</td>
+<td style="text-align: left;">906</td>
+<td style="text-align: left;"><strong>+16</strong></td>
+<td style="text-align: left;">Stable Fluctuations</td>
+</tr>
+<tr>
+<td style="text-align: left;">2009</td>
+<td style="text-align: left;">Jan</td>
+<td style="text-align: left;">920</td>
+<td style="text-align: left;"><strong>+14</strong></td>
+<td style="text-align: left;">Predictable growth</td>
+</tr>
+<tr>
+<td style="text-align: left;">2010</td>
+<td style="text-align: left;">Jan</td>
+<td style="text-align: left;">936</td>
+<td style="text-align: left;"><strong>+16</strong></td>
+<td style="text-align: left;"><strong>Stationary Series</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The seasonal differenced values shows a constant mean of <span class="arithmatex">\(\approx\)</span> 15 displaying a (weakly) stationary series. The variance and covariance are also constant and independent of time. In this case, despite the fact that the mango trader is consistently making higher profits year over year in January the plotted differenced values exhibit stationarity. In practice, business profits might typically grow year over year but their growth trajectory (assuming the only component affecting stationarity is seasonality) will be stationary. In actuality, even after seasonal differencing the resultant distribution might not be stationary yet hence requiring further mathematical manipulations.</p>
+<h2 id="non-stationary-series">Non - Stationary Series</h2>
+<h3 id="mean">Mean</h3>
+<p>In non stationary data like the mango sales the mean is a function that changes with time (rather than being a single value like in the tablsalt stationary data). Raw data can be modeled as:</p>
+<div class="arithmatex">
+\[
+x_t = \mu_{t} + \epsilon_{t}
+\]
+</div>
+
+<p>where <span class="arithmatex">\(\mu_{t} = T_t + S_t\)</span> .</p>
+<p>In the mango sales example the trend (<span class="arithmatex">\(T_t\)</span>) is the long-term upward crawl in sales from more people moving into Nairobi due to rural-urban migration year over year. The periodic component (<span class="arithmatex">\(S_t\)</span>) is the seasonal humps (January to March peak season).</p>
+<p>When non-stationary data is differenced ideally if all trend and seasonality components are identified and removed the mean function effectively becomes 0 hence the mean is eliminated leaving only the normally distributed errors.</p>
+<h2 id="stationarity">Stationarity</h2>
+<h3 id="technical-definition">Technical Definition</h3>
+<p>A stochastic process <span class="arithmatex">\(\{X_t, t \in \mathbb{Z}\}\)</span> is said to be <strong>Strictly Stationary</strong> if the joint distribution of <span class="arithmatex">\((X_{t_1}, \dots, X_{t_n})\)</span> is identical to the joint distribution of <span class="arithmatex">\((X_{t_1+h}, \dots, X_{t_n+h})\)</span> for all <span class="arithmatex">\(n\)</span>, all time points <span class="arithmatex">\(t_i\)</span>, and all time shifts <span class="arithmatex">\(h\)</span>.</p>
+<p>In most applied contexts, we use <strong>Weak Stationarity</strong> (also known as Covariance Stationarity or Second-Order Stationarity). A process is weakly stationary if it satisfies three conditions: </p>
+<ol>
+<li><strong>Constant Mean:</strong> The expected value is independent of time:    </li>
+</ol>
+<div class="arithmatex">
+\[
+E[X_t] = \mu \quad \forall t
+\]
+</div>
+
+<ol>
+<li><strong>Finite Variance:</strong> The variance is finite and constant for all <span class="arithmatex">\(t\)</span>:    </li>
+</ol>
+<div class="arithmatex">
+\[
+Var(X_t) = \sigma^2 < \infty
+\]
+</div>
+
+<ol>
+<li><strong>Constant Autocovariance:</strong> The covariance between two observations depends only on the time lag <span class="arithmatex">\(h\)</span>, not on the actual time <span class="arithmatex">\(t\)</span>:    </li>
+</ol>
+<div class="arithmatex">
+\[
+\gamma(h) = Cov(X_t, X_{t+h}) = E[(X_t - \mu)(X_{t+h} - \mu)]
+\]
+</div>
+
+<h3 id="laypersons-definition">Layperson's Definition</h3>
+<p>In Kenya, mangos are in season from January to March every year. During this period the sales of mangos are higher than all other months in the year. Therefore, data collected on the sales of mangos from year over year aggregated by month will have seasonality and be non stationary. It is important to note of course that even though seasonal data is always non stationary; non stationary data does not imply seasonality.</p>
+<p>This is because it violates the three assumptions of weak stationarity. Firstly, the expected value is dependent of time. If I select the time period January to March and compare it with another time period August to October I will find that the former period will have a higher mean sales than the latter. Hence, the distribution is dependent on time. Selecting a different time period leads to a different mean value of the sales.</p>
+<p>Secondly, although the variance is finite it is not constant for all time <span class="arithmatex">\(t\)</span>. This is evidenced by the fact that during the months where mangos are in season a large quantity of mangos are sold. The variance in the sales of the mangos is larger. However, when mangos are no longer in season, sales show less variance. This is an exhibition of <strong>heteroscedasticity</strong>.</p>
+<p>Finally, the covariance between two observations depends on the actual time <span class="arithmatex">\(t\)</span> and not only on the time lag <span class="arithmatex">\(h\)</span>. If the time lag is selected as <span class="arithmatex">\(h =1\)</span>, that is a one month lag (pick months that are 1 month apart) depending on the months of the year that one selects in order to get covariance, the values obtained will be different. If covariance is done between January and February (peak season) it will be different than the covariance for August and September (off season). Even though the lag is the same <span class="arithmatex">\(h = 1\)</span> the covariance is different.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Year</th>
+<th style="text-align: left;">Month</th>
+<th style="text-align: left;">Mango Sales (Units)</th>
+<th style="text-align: left;">Context/Observation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">2023</td>
+<td style="text-align: left;">Jan</td>
+<td style="text-align: left;">850</td>
+<td style="text-align: left;"><strong>Peak Season (High Mean)</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">2023</td>
+<td style="text-align: left;">Feb</td>
+<td style="text-align: left;">920</td>
+<td style="text-align: left;"><strong>Peak Season</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">2023</td>
+<td style="text-align: left;">Mar</td>
+<td style="text-align: left;">780</td>
+<td style="text-align: left;"><strong>Peak Season</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">2023</td>
+<td style="text-align: left;">Apr</td>
+<td style="text-align: left;">210</td>
+<td style="text-align: left;">Mean drops significantly</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023</td>
+<td style="text-align: left;">May</td>
+<td style="text-align: left;">185</td>
+<td style="text-align: left;">Off-season (Low variance)</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023</td>
+<td style="text-align: left;">Jun-Dec</td>
+<td style="text-align: left;">150 - 200</td>
+<td style="text-align: left;">Consistent Low Sales</td>
+</tr>
+<tr>
+<td style="text-align: left;">2024</td>
+<td style="text-align: left;">Jan</td>
+<td style="text-align: left;">890</td>
+<td style="text-align: left;"><strong>Seasonality Repeats</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">2024</td>
+<td style="text-align: left;">Feb</td>
+<td style="text-align: left;">950</td>
+<td style="text-align: left;"><strong>Peak Season</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">2024</td>
+<td style="text-align: left;">Mar</td>
+<td style="text-align: left;">810</td>
+<td style="text-align: left;"><strong>Peak Season</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">2024</td>
+<td style="text-align: left;">Apr-Dec</td>
+<td style="text-align: left;">160 - 220</td>
+<td style="text-align: left;">Off-season</td>
+</tr>
+<tr>
+<td style="text-align: left;">2025</td>
+<td style="text-align: left;">Jan</td>
+<td style="text-align: left;">910</td>
+<td style="text-align: left;"><strong>Mean is Time-Dependent</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">2025</td>
+<td style="text-align: left;">Feb</td>
+<td style="text-align: left;">980</td>
+<td style="text-align: left;"><strong>Peak Season</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">2025</td>
+<td style="text-align: left;">Mar</td>
+<td style="text-align: left;">840</td>
+<td style="text-align: left;"><strong>Peak Season</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">2025</td>
+<td style="text-align: left;">Apr-Dec</td>
+<td style="text-align: left;">170 - 230</td>
+<td style="text-align: left;">Off-season</td>
+</tr>
+</tbody>
+</table>
+<p>On the other hand, for a product like table salt its sales are exhibit stationarity. Whether it is January or July, a household typically consumes the same amount of salt. There is no such thing as a salt season. The average sales <span class="arithmatex">\((E[X_t​])\)</span> remain consistent month over month. Moreover, the noise in salt sales is very low. There are no massive bulk-buying panics or periods where sales drop to near zero. The fluctuations <span class="arithmatex">\((Var(X_t​))\)</span> are small and stable. Finally, the relationship between sales in January and February is statistically identical to the relationship between sales in August and September. The correlation depends only on the time gap, not the specific month.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Year</th>
+<th style="text-align: left;">Month</th>
+<th style="text-align: left;">Salt Sales (Units)</th>
+<th style="text-align: left;">Context/Observation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">2023</td>
+<td style="text-align: left;">Jan</td>
+<td style="text-align: left;">502</td>
+<td style="text-align: left;">Mean <span class="arithmatex">\(\approx\)</span> 500</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023</td>
+<td style="text-align: left;">Feb</td>
+<td style="text-align: left;">498</td>
+<td style="text-align: left;">Variance is constant</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023</td>
+<td style="text-align: left;">Mar</td>
+<td style="text-align: left;">505</td>
+<td style="text-align: left;">Noise is random</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023</td>
+<td style="text-align: left;">Apr</td>
+<td style="text-align: left;">497</td>
+<td style="text-align: left;">No seasonal shift</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023</td>
+<td style="text-align: left;">May</td>
+<td style="text-align: left;">503</td>
+<td style="text-align: left;">No seasonal shift</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023</td>
+<td style="text-align: left;">Jun-Dec</td>
+<td style="text-align: left;">495 - 508</td>
+<td style="text-align: left;">Fluctuates around the mean</td>
+</tr>
+<tr>
+<td style="text-align: left;">2024</td>
+<td style="text-align: left;">Jan</td>
+<td style="text-align: left;">499</td>
+<td style="text-align: left;"><strong>Mean is Time-Independent</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">2024</td>
+<td style="text-align: left;">Feb</td>
+<td style="text-align: left;">503</td>
+<td style="text-align: left;"><strong>Constant Variance</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">2024</td>
+<td style="text-align: left;">Mar</td>
+<td style="text-align: left;">501</td>
+<td style="text-align: left;"><strong>Constant Autocovariance</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">2024</td>
+<td style="text-align: left;">Apr-Dec</td>
+<td style="text-align: left;">496 - 505</td>
+<td style="text-align: left;">Stationary behavior</td>
+</tr>
+<tr>
+<td style="text-align: left;">2025</td>
+<td style="text-align: left;">Jan</td>
+<td style="text-align: left;">506</td>
+<td style="text-align: left;">Statistics do not change</td>
+</tr>
+<tr>
+<td style="text-align: left;">2025</td>
+<td style="text-align: left;">Feb</td>
+<td style="text-align: left;">496</td>
+<td style="text-align: left;">Statistics do not change</td>
+</tr>
+<tr>
+<td style="text-align: left;">2025</td>
+<td style="text-align: left;">Mar</td>
+<td style="text-align: left;">500</td>
+<td style="text-align: left;">Statistics do not change</td>
+</tr>
+<tr>
+<td style="text-align: left;">2025</td>
+<td style="text-align: left;">Apr-Dec</td>
+<td style="text-align: left;">498 - 505</td>
+<td style="text-align: left;"><strong>Ready for Linear Modeling</strong></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 STA3050 SS26 USIU - Africa
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.expand", "navigation.indexes", "navigation.top", "toc.follow", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

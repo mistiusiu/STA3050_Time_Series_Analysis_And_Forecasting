@@ -1,0 +1,1515 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://mistiusiu.github.io/STA3050_Time_Series_Analysis_And_Forecasting/Seasonal%20ARIMA%20Model/Seasonal%20ARIMA%20Model/">
+      
+      
+        <link rel="prev" href="../References/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/usiu-logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Seasonal ARIMA Model - Seasonal ARIMA Forecasting</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra-minimal.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#preamble" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Seasonal ARIMA Forecasting" class="md-header__button md-logo" aria-label="Seasonal ARIMA Forecasting" data-md-component="logo">
+      
+  <img src="../assets/usiu-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Seasonal ARIMA Forecasting
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Seasonal ARIMA Model
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Seasonal ARIMA Forecasting" class="md-nav__button md-logo" aria-label="Seasonal ARIMA Forecasting" data-md-component="logo">
+      
+  <img src="../assets/usiu-logo.png" alt="logo">
+
+    </a>
+    Seasonal ARIMA Forecasting
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AR%20Model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AR Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARIMA%20Model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ARIMA Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARMA%20Model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ARMA Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MA%20Model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MA Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Mathematical%20Proofs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mathematical Proofs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../References/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seasonal ARIMA Model
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seasonal ARIMA Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="CONTENTS">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      CONTENTS
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#preamble" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preamble
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#differencing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Differencing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Differencing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#seasonal-differencing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Seasonal Differencing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Seasonal Differencing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#importance-of-seasonal-differencing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Importance of Seasonal Differencing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#non-seasonal-differencing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Non-Seasonal Differencing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#differencing-for-trend-and-seasonality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Differencing for Trend and Seasonality
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#patterns-in-acf-and-pacf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Patterns in ACF and PACF
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model Notation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assumptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Assumptions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Assumptions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stationarity-after-differencing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stationarity After Differencing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#white-noise-residuals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        White Noise Residuals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constant-variance-of-residuals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constant Variance of Residuals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#normality-of-residuals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Normality of Residuals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linearity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linearity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed-and-known-seasonal-period" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed and Known Seasonal Period
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stable-seasonal-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stable Seasonal Pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-structural-breaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No Structural Breaks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-outliers-or-level-shifts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No Outliers or Level Shifts
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Limitations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#manual-specification-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manual Specification Complexity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#large-data-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Large Data Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#single-seasonality-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Single Seasonality Only
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#forecast-horizon-degradation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Forecast Horizon Degradation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#univariate-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Univariate Only
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overcoming-sarimas-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overcoming SARIMA's Limitations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Overcoming SARIMA&#39;s Limitations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sarimax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SARIMAX
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tbats-trigonometric-box-cox-arma-trend-seasonal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TBATS (Trigonometric Box-Cox ARMA Trend Seasonal)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prophet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prophet
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="CONTENTS">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      CONTENTS
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#preamble" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preamble
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#differencing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Differencing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Differencing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#seasonal-differencing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Seasonal Differencing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Seasonal Differencing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#importance-of-seasonal-differencing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Importance of Seasonal Differencing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#non-seasonal-differencing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Non-Seasonal Differencing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#differencing-for-trend-and-seasonality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Differencing for Trend and Seasonality
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#patterns-in-acf-and-pacf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Patterns in ACF and PACF
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model Notation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assumptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Assumptions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Assumptions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stationarity-after-differencing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stationarity After Differencing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#white-noise-residuals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        White Noise Residuals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constant-variance-of-residuals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constant Variance of Residuals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#normality-of-residuals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Normality of Residuals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linearity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linearity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed-and-known-seasonal-period" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed and Known Seasonal Period
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stable-seasonal-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stable Seasonal Pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-structural-breaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No Structural Breaks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-outliers-or-level-shifts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No Outliers or Level Shifts
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Limitations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#manual-specification-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manual Specification Complexity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#large-data-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Large Data Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#single-seasonality-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Single Seasonality Only
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#forecast-horizon-degradation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Forecast Horizon Degradation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#univariate-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Univariate Only
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fixed Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overcoming-sarimas-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overcoming SARIMA's Limitations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Overcoming SARIMA&#39;s Limitations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sarimax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SARIMAX
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tbats-trigonometric-box-cox-arma-trend-seasonal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TBATS (Trigonometric Box-Cox ARMA Trend Seasonal)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prophet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prophet
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Seasonal ARIMA Model</h1>
+
+<h2 id="preamble">Preamble</h2>
+<p>Before exploring this content ensure that you have brushed up on <a href="../Mathematical%20Proofs/#stationarity">Stationarity</a> , <a href="../AR%20Model/">AR Model</a>, <a href="../MA%20Model/">MA Model</a>, <a href="../ARMA%20Model/">ARMA Model</a>,  and the <a href="../ARIMA%20Model/">ARIMA Model</a>. If any mathematical notation or expansion feels unfamiliar explore the linked <a href="../Mathematical%20Proofs/">proofs</a> content.</p>
+<h2 id="introduction">Introduction</h2>
+<p>In a seasonal ARIMA model, seasonal AR and MA terms predict <span class="arithmatex">\(x_t\)</span> using data values and errors that are multiples of S (the span of the seasonality).</p>
+<p>For example, if <span class="arithmatex">\(S = 12\)</span> and <span class="arithmatex">\(x_t\)</span> is March 2026 then a seasonal first order autoregressive model AR(1) will use <span class="arithmatex">\(x_{t-12}\)</span> to predict <span class="arithmatex">\(x_t\)</span> where <span class="arithmatex">\(x_{t-12}\)</span> is March 2025. Similarly, a second order autoregressive model AR(2) will use <span class="arithmatex">\(x_{t-12}\)</span> and <span class="arithmatex">\(x_{t-24}\)</span> to predict <span class="arithmatex">\(x_t\)</span>. Hence it will use March 2025 and March 2024. In the same vein, a seasonal first order moving average and second order moving average model, MA(1) and MA(2) respectively, will use <span class="arithmatex">\(w_{t-12}\)</span>, and <span class="arithmatex">\(w_{t-12}\)</span> and <span class="arithmatex">\(w_{t-24}\)</span> respectively to predict <span class="arithmatex">\(w_{t}\)</span>.</p>
+<h2 id="differencing">Differencing</h2>
+<p>Seasonality often causes data to lack stationarity (not be stationary). This is because the average values at some particular times within the seasonal span (months, for example) may be different that the mean values at other times. Fruits are in season chiefly during certain months in a year. Mangos are usually in season during the first few months of the year in Kenya (January to March) hence their sales during this time will be higher than in the other months where they are not in season.</p>
+<h3 id="seasonal-differencing">Seasonal Differencing</h3>
+<p>With <span class="arithmatex">\(S = 12\)</span>, which may occur with monthly data, a seasonal difference using the <a href="../Mathematical%20Proofs/#backshift-operator">Backshift Operator</a> would be:</p>
+<div class="arithmatex">
+\[
+(1 - B^{12})x_t = x_t - x_{t-12}
+\]
+</div>
+
+<p>The logic behind this differencing is that since the patterns in the data are observed to repeat every <code>S</code> spans of time, it stands to reason that in the case of <code>S = 12</code> where we are dealing with months; the values (differences) in the previous year may be about the same for each month of the year yielding a stationary series. This removes the seasonal trend and can also get rid of a seasonal random walk type of stationarity (<a href="../Mathematical%20Proofs/#seasonal-differencing">Proof</a>).</p>
+<h4 id="importance-of-seasonal-differencing">Importance of Seasonal Differencing</h4>
+<p>Seasonal differencing eliminates the seasonal patterns. The mango sales data during peak mango season is a seasonal pattern that repeats every 12 months. A non-seasonal differencing cannot eliminate such a pattern. Only the general trend is eliminated but the seasonal peaks remain.</p>
+<p>Moreover, when a time series' present value is strongly linked with its value from the same season in the prior year, it has a seasonal unit root. In mango sales data the peak season is January (to March). Thus, the sales in January 2026 are strongly influenced by the sales in January 2025. A seasonal unit root represents that the value of <span class="arithmatex">\(|\Phi| = 1\)</span> meaning it falls within the unit circle. This means that the sales of consecutive years is the sale of the previous years plus a shock causing the effect to diverge towards infinity exhibiting non-stationarity. However, in a stationary series that is effected by shifting the question from "What are my sales in January 2026?" to "How many more or less mangos did I sell this January (2026) compared to January last year (2025)?". This can only be stabilized by
+seasonal differencing, not by standard differencing. This is further explored in <a href="../Mathematical%20Proofs/#stationarity">stationarity</a>.</p>
+<p>Hence, seasonal differencing creates a stationary seasonal pattern. This converts data with multiplicative seasonality into an additive stationary form.</p>
+<h3 id="non-seasonal-differencing">Non-Seasonal Differencing</h3>
+<p>If trend is present in the data then there is need for non-seasonal differencing to remove the trend present in the data. Hence we use:</p>
+<div class="arithmatex">
+\[
+(1 - B)x_t = x_t - x_{t-1}
+\]
+</div>
+
+<h3 id="differencing-for-trend-and-seasonality">Differencing for Trend and Seasonality</h3>
+<p>If both trend and seasonality are present then the ACF and PACF of:</p>
+<div class="arithmatex">
+\[
+(1 - B^{12})(1 - B)x_t = (x_t - x_{t- 1)} - (x_{t-12} - x_{t - 13})
+\]
+</div>
+
+<p>ought to be examined. This effectively breaks down the dependency into recent things that have happened and long-range things that have happened using these to assume that the sales of mangos in the current month (going back to the mangos) example can be explained by the sales in the previous month (recent things) and the sales from the same month a year ago (long-range things). The mean, <span class="arithmatex">\(\mu_{t}\)</span>, may have been removed part of which may include a periodic component (<a href="../Mathematical%20Proofs/#mean">Proof</a>).</p>
+<p>By examining the ACF and PACF behavior over the first few lags (less than S) the non-seasonal terms that might work in further refining the model can be determined (the ACF and PACF plots effectively plot the residuals). A case in point is if the ACF still shows huge spikes at lag 12, it means the periodic component wasn't fully removed, and you might need a more complex seasonal model (like a Seasonal MA term).</p>
+<h2 id="patterns-in-acf-and-pacf">Patterns in ACF and PACF</h2>
+<p>The autocorrelation function (ACF) measures the correlation between observations separated by different time lags. If data has seasonality, the ACF will exhibit significant spikes at seasonal lags (<span class="arithmatex">\(S\)</span>, <span class="arithmatex">\(2S\)</span>, <span class="arithmatex">\(3S\)</span>). For the mango sales data (<span class="arithmatex">\(S = 12\)</span>), this means strong spikes at lags 12 and 24. A gradual decay in the seasonal lags suggests seasonal non-stationarity of the data requiring seasonal differencing (<span class="arithmatex">\(D\)</span>). A sharp cutoff at seasonal lags suggests the presence of a seasonal MA component. Hence, ACF is used to identify the non-seasonal MA order (<span class="arithmatex">\(q\)</span>) at early lags and the seasonal MA order (<span class="arithmatex">\(Q\)</span>) at seasonal lags.</p>
+<p>The partial autocorrelation function (PACF) measures the direct correlation between observations after removing the effects of intermediate lag variables. It effectually asks the question <em>"Does knowing what happened two days ago tell me anything that knowing what happened yesterday didn't already cover?"</em>. If the answer is no then the PACF is 0. </p>
+<p>If data has seasonality, the PACF will exhibit significant spikes at seasonal lags (<span class="arithmatex">\(S\)</span>, <span class="arithmatex">\(2S\)</span>, <span class="arithmatex">\(3S\)</span>). For the mango sales data (<span class="arithmatex">\(S = 12\)</span>), this means strong spikes at lags 12 and 24. A gradual decay in the seasonal lags suggests seasonal non-stationarity of the data requiring seasonal differencing (<span class="arithmatex">\(D\)</span>). A sharp cutoff at seasonal lags suggests the presence of a seasonal AR component (<span class="arithmatex">\(P\)</span>). The identified AR order that will remove the non-seasonal and seasonal non stationary effects is the last lag before the PACF spikes "cut off" and hit the blue significance zone. Hence, ACF is used to identify the non-seasonal MA order (<span class="arithmatex">\(p\)</span>) at early lags and the seasonal MA order (<span class="arithmatex">\(P\)</span>) at seasonal lags.</p>
+<h2 id="model-notation">Model Notation</h2>
+<p>Seasonal and non-seasonal components are incorporated in a multiplicative model.</p>
+<div class="arithmatex">
+\[
+ARIMA(p, d, q) \times (P, D, Q)S
+\]
+</div>
+
+<p><span class="arithmatex">\(p\)</span> = non-seasonal AR order <br />
+<span class="arithmatex">\(d\)</span> = non-seasonal differencing <br />
+<span class="arithmatex">\(q\)</span> = non-seasonal MA order <br />
+<span class="arithmatex">\(P\)</span> = seasonal AR order  <br />
+<span class="arithmatex">\(D\)</span> = seasonal differencing  <br />
+<span class="arithmatex">\(Q\)</span> = seasonal MA order <br />
+<span class="arithmatex">\(S\)</span>  = time span of repeating seasonal pattern    </p>
+<p>The Seasonal ARIMA model is two separate ARIMA models multiplied together. The first one handles the relationship between two consecutive points (months for our mango sales) and the other handles the same points across seasons (years for our mango sales).</p>
+<p>The aim of the SARIMA model is to effectively locate coefficients that turn the data into uncorrelated white noise.</p>
+<p>In the case where there is no differencing parameter achieving such an operation will cause:</p>
+<div class="arithmatex">
+\[
+AR\ Side \times Data = MA\ Side \times Noise
+\]
+</div>
+
+<p>By passing the data though an autoregressive filter it subtracts out everything that can be predicted from the past leaving behind the unpredictable parts of the data. By adding the memory of past shocks to the pure white noise <span class="arithmatex">\(\epsilon_t\)</span> this causes structured randomness to result. If the two sides are equal then the model has accounted for every pattern in the data, leaving only the unaccountable noise.</p>
+<p>The Data (<span class="arithmatex">\(Y_t\)</span>) is modeled as filtered noise being a weighted collection of current and past random shocks.</p>
+<div class="arithmatex">
+\[
+Y_t = \frac{MA\ Side}{AR\ Side} \times Noise
+\]
+</div>
+
+<p>We could also solve for the noise:</p>
+<div class="arithmatex">
+\[
+\epsilon_t = \frac{MA\ Side}{AR\ Side} \times Y_t
+\]
+</div>
+
+<p>The mathematical notation for the AR and MA sides is:</p>
+<div class="arithmatex">
+\[
+\underbrace{\Phi_P(B^S) \phi_p(B)}_{\text{Combined AR}} (Y_t - \mu) = \underbrace{\Theta_Q(B^S) \theta_q(B)}_{\text{Combined MA}} \epsilon_t
+\]
+</div>
+
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Component</th>
+<th style="text-align: left;">Algebraic Operator</th>
+<th style="text-align: left;">What it represents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Non-seasonal AR</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\phi_p(B)\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\((1 - \phi_1 B - \phi_2 B^2 - \dots - \phi_p B^p)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Seasonal AR</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\Phi_P(B^S)\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\((1 - \Phi_1 B^S - \Phi_2 B^{2S} - \dots - \Phi_P B^{PS})\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Non-seasonal MA</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\theta_q(B)\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\((1 + \theta_1 B + \theta_2 B^2 + \dots + \theta_q B^q)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Seasonal MA</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\Theta_Q(B^S)\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\((1 + \Theta_1 B^S + \Theta_2 B^{2S} + \dots + \Theta_Q B^{QS})\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Note that in this notation there is no constant <span class="arithmatex">\(c\)</span>. This occurs from the choice to subtract <span class="arithmatex">\(\mu\)</span> from the data. This centers the data enabling easier computations (working with as series with a mean of 0 is easier) and not requiring the constant <span class="arithmatex">\(c\)</span> to be carried in all computations. The <a href="../Mathematical%20Proofs/#equivalence-of-centered-and-non-centered-ar1">equivalence of the centered and non-centered AR</a>  causes:</p>
+<div class="arithmatex">
+\[
+\phi(B)(Y_t - \mu) = \epsilon_t
+\]
+</div>
+
+<div class="arithmatex">
+\[
+\phi(B)Y_t = c + \epsilon_t
+\]
+</div>
+
+<h2 id="assumptions">Assumptions</h2>
+<h3 id="stationarity-after-differencing">Stationarity After Differencing</h3>
+<p>After applying regular and seasonal differencing, the series must have a constant mean and constant autocovariance that depends only on lag <span class="arithmatex">\(h\)</span>, not on time <span class="arithmatex">\(t\)</span>. This is the mathematical foundation of SARIMA modeling. Mombasa tea prices often exhibit an upward trend due to inflation and global demand, and seasonal peaks after harvests. Differencing removes the trend and stabilizes the seasonal pattern. If the variance grows over time (price volatility increases with inflation), this assumption fails.</p>
+<h3 id="white-noise-residuals">White Noise Residuals</h3>
+<p>The errors left after fitting the model must be completely random with zero mean, no autocorrelation, and constant variance. This confirms the model has captured all predictable patterns. After modeling tea prices, if residuals still show correlation at 12-month lags, the model has missed part of the seasonal structure—perhaps a secondary seasonal effect.</p>
+<h3 id="constant-variance-of-residuals">Constant Variance of Residuals</h3>
+<p>The spread of prediction errors should remain consistent across all time periods and levels of predicted values. If the model predicts tea prices poorly during volatile periods like drought years but well during stable years, variance is not constant. A logarithmic or box-cox transformation may be needed before modeling.</p>
+<h3 id="normality-of-residuals">Normality of Residuals</h3>
+<p>The errors should follow a bell-shaped distribution. While point forecasts remain reliable without normality, this assumption is essential for valid confidence intervals, hypothesis tests, and prediction intervals. If there are extreme price spikes, like a sudden 50% price jump due to a major buyer entering the market, create heavy-tailed residuals, prediction intervals will be unreliable even if point forecasts are acceptable.</p>
+<h3 id="linearity">Linearity</h3>
+<p>SARIMA assumes that future values are a linear combination of past values and past errors. It cannot capture nonlinear relationships, threshold effects, or regime switches. Tea prices may respond differently to a rainfall deficit depending on whether the market is already in a supply glut. SARIMA cannot capture such nonlinear dynamics.</p>
+<h3 id="fixed-and-known-seasonal-period">Fixed and Known Seasonal Period</h3>
+<p>You must know the length of the seasonal cycle in advance, and that length must remain constant. For monthly tea data, the seasonal period is 12. If tea harvesting patterns shift due to climate change, for instance, two rainy seasons merging into one, the fixed 12-month seasonality no longer aligns with reality.</p>
+<h3 id="stable-seasonal-pattern">Stable Seasonal Pattern</h3>
+<p>The strength and shape of the seasonal pattern must remain consistent over time. Seasonal peaks and troughs should maintain similar magnitude and timing. If climate change causes the main tea harvest to shift from June to May over a decade, the seasonal pattern is not stable. SARIMA would misalign over time.</p>
+<h3 id="no-structural-breaks">No Structural Breaks</h3>
+<p>The underlying process generating the data must remain stable throughout the period. SARIMA cannot handle sudden policy changes, major economic events, changes in trend direction, or shifts in seasonal behavior. In 2023, Kenya introduced a new tea auction floor system that altered price-discovery mechanisms. Such a structural break violates the assumption of a stable data-generating process. Hence, SARIMA models trained with data predating 2023 would struggle to predict prices post 2023.</p>
+<h3 id="no-outliers-or-level-shifts">No Outliers or Level Shifts</h3>
+<p>The data should not contain extreme observations or sudden jumps to new levels that do not revert. A single outlier, such as a month where prices doubled due to a panic buy by a major importer, can distort parameter estimates and create misleading autocorrelation patterns.</p>
+<h2 id="limitations">Limitations</h2>
+<h3 id="manual-specification-complexity">Manual Specification Complexity</h3>
+<p>Selecting the correct combination of parameters <span class="arithmatex">\((p, d, q, P, D, Q, s)\)</span> requires experience and careful analysis. The search space is enormous, and poor choices lead to underfitting or overfitting. A novice analyst might choose the wrong seasonal order for tea prices, failing to capture the post-harvest price dip, resulting in systematic forecast errors.</p>
+<h3 id="large-data-requirements">Large Data Requirements</h3>
+<p>SARIMA needs enough data to reliably estimate seasonal patterns, at least four to five full seasonal cycles. For monthly tea data, this means four to five years of observations. If a researcher attempts to model tea prices using only 18 months of data, the seasonal component cannot be reliably estimated.</p>
+<h3 id="single-seasonality-only">Single Seasonality Only</h3>
+<p>Standard SARIMA can only handle one seasonal pattern at a time. Data with multiple seasonal cycles cannot be adequately modeled without extensions or alternative approaches. If tea prices exhibited both a 12-month cycle and a 6-month intra-year pattern related to two harvest seasons, SARIMA could only model one.</p>
+<h3 id="forecast-horizon-degradation">Forecast Horizon Degradation</h3>
+<p>Forecasts become increasingly uncertain as you project further into the future. SARIMA works best for short-term forecasting. A SARIMA model may forecast next month's tea price reasonably well but will likely converge to the average seasonal pattern with wide confidence intervals when forecasting two years ahead.</p>
+<h3 id="univariate-only">Univariate Only</h3>
+<p>Standard SARIMA uses only the past values of the series itself to make predictions. It cannot incorporate external information that might improve forecasts. A model for tea prices would be stronger if it could include rainfall in tea-growing regions, global crude oil prices (affecting transport), or exchange rate movements. Standard SARIMA cannot do this.</p>
+<h3 id="fixed-parameters">Fixed Parameters</h3>
+<p>Once estimated, model parameters remain constant over time. The model cannot adapt to gradual changes in trends or evolving seasonal patterns without periodic re-estimation or rolling window approaches. As Kenyan tea gradually gains premium branding in export markets, the long-term price trend may steepen. A SARIMA model estimated a decade ago would not adapt to this change unless re-estimated.</p>
+<h2 id="overcoming-sarimas-limitations">Overcoming SARIMA's Limitations</h2>
+<h3 id="sarimax">SARIMAX</h3>
+<p>By including exogeneous variables it overcomes SARIMA's limitations of being univariate only. It will incorporate rainfall data, global tea price index, and fuel costs as exogenous variables to improve forecast accuracy of tea prices. However, it still assumes single seasonality, still requires manual parameter selection, and coefficients remain fixed.</p>
+<h3 id="tbats-trigonometric-box-cox-arma-trend-seasonal">TBATS (Trigonometric Box-Cox ARMA Trend Seasonal)</h3>
+<p>It handles multiple seasonal period and allows seasonality to evolve over time. If tea prices show both a 12-month cycle and a secondary 6-month cycle related to two harvest seasons, TBATS can model both simultaneously. It is, however, univariate only and does not easily incorporate external drivers.</p>
+<h3 id="prophet">Prophet</h3>
+<p>It is designed for business forecasting with automatic changepoint detection, multiple seasonalities, and simple tuning. It automatically detects when the price trend shifted due to policy changes like the 2023 auction system change. It also incorporates holiday effects (Ramadan demand spikes), handles yearly and monthly seasonalities, and allows inclusion of weather variables as regressors. It still has a linear additive structure, and may require regularization to avoid overfitting.</p>
+<h2 id="summary">Summary</h2>
+<p>SARIMA remains a powerful and interpretable model for univariate time series with a single, stable seasonal pattern and no structural breaks. However, for complex real-world data, such as Mombasa tea prices, which may involve multiple seasonalities, external drivers, structural breaks, and evolving seasonal patterns, practitioners should consider SARIMAX, TBATS, or Prophet depending on the specific limitations they face.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 STA3050 SS26 USIU - Africa
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.expand", "navigation.indexes", "navigation.top", "toc.follow", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
