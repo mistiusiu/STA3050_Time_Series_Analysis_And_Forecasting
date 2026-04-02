@@ -19,6 +19,8 @@ Y = \beta_0 + \beta_1X_1 + \beta_2X_2 + \cdot \cdot \cdot \ + \beta_kX_k + \epsi
 
 They are structurally identical. The values $\beta_k$ of a linear regression are computed from the data effectively acting as weights that determine the effect of a specific variable $X_k$ on the outcome. This similar to how the values $\phi_k$ of an autoregressive model are essentially weights that must satisfy the requirement that all roots ($B$) of the characteristic equation must lie outside the unit circle in the complex plane for the series to be stationary. And the values $Y_{t-k}$ are past observations.
 
+Note that $\epsilon_t \sim \text{i.i.d. } \mathcal{N}(0, \sigma_\epsilon^2)$. The error has a mean of 0 and constant variance.
+
 Let's explore $\phi_{k}$. Using the [[Mathematical Proofs#Backshift Operator|Backshift Operator]] any $AR(p)$ model can be expressed as:
 
 

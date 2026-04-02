@@ -11,6 +11,8 @@ B^{2}x_t = x_{t-2}
 
 The backshift operator exists as a mathematical notation that exists for the sake of convenience of denotation.
 
+## Invertibility
+
 ## Method of Telescoping Sums
 
 Let the partial sum $S_n$​ be the sum of the first n terms of the geometric series:
