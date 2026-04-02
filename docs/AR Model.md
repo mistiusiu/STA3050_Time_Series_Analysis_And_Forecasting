@@ -154,3 +154,4 @@ Y_t - \phi_1BY_t + \phi_2B^2Y_t = \epsilon_t
 </div>
 
 To prove the coefficients being tied to the roots [[Mathematical Proofs#Vieta's Formulas for $AR(2)$ Model|Vieta's Formulas]]  are employed. In higher order $AR(p)$ models the logic of the roots of the characteristic equation being outside the unit circle is employed with the coefficients correlating in more complex manners.
+

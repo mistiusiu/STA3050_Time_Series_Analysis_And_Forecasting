@@ -26,6 +26,15 @@ With `S = 12`, which may occur with monthly data, a seasonal difference using th
 
 The logic behind this differencing is that since the patterns in the data are observed to repeat every `S` spans of time, it stands to reason that in the case of `S = 12` where we are dealing with months; the values (differences) in the previous year may be about the same for each month of the year yielding a stationary series. This removes the seasonal trend and can also get rid of a seasonal random walk type of stationarity ([[Mathematical Proofs#Seasonal Differencing|Proof]]).
 
+#### Importance of Seasonal Differencing
+
+Seasonal differencing eliminates the seasonal patterns. The mango sales data during peak mango season is a seasonal pattern that repeats every 12 months. A non-seasonal differencing cannot eliminate such a pattern. Only the general trend is eliminated but the seasonal peaks remain.
+
+Moreover, when a time series' present value is strongly linked with its value from the same season in the prior year, it has a seasonal unit root. In mango sales data the peak season is January (to March). Thus, the sales in January 2026 are strongly influenced by the sales in January 2025. A seasonal unit root represents that the value of $|\Phi| = 1$ meaning it falls within the unit circle. This means that the sales of consecutive years is the sale of the previous years plus a shock causing the effect to diverge towards infinity exhibiting non-stationarity. However, in a stationary series that is effected by shifting the question from "What are my sales in January 2026?" to "How many more or less mangos did I sell this January (2026) compared to January last year (2025)?". This can only be stabilized by
+seasonal differencing, not by standard differencing. This is further explored in [[Stationarity|stationarity]].
+
+Hence, seasonal differencing creates a stationary seasonal pattern. This converts data with multiplicative seasonality into an additive stationary form.
+
 ### Non-Seasonal Differencing
 
 If trend is present in the data then there is need for non-seasonal differencing to remove the trend present in the data. Hence we use:
@@ -138,3 +147,82 @@ Note that in this notation there is no constant $c$. This occurs from the choice
 \]
 </div>
 
+## Assumptions
+### Stationarity After Differencing
+
+After applying regular and seasonal differencing, the series must have a constant mean and constant autocovariance that depends only on lag $h$, not on time $t$. This is the mathematical foundation of SARIMA modeling. Mombasa tea prices often exhibit an upward trend due to inflation and global demand, and seasonal peaks after harvests. Differencing removes the trend and stabilizes the seasonal pattern. If the variance grows over time (price volatility increases with inflation), this assumption fails.
+
+### White Noise Residuals
+
+The errors left after fitting the model must be completely random with zero mean, no autocorrelation, and constant variance. This confirms the model has captured all predictable patterns. After modeling tea prices, if residuals still show correlation at 12-month lags, the model has missed part of the seasonal structure—perhaps a secondary seasonal effect.
+
+### Constant Variance of Residuals
+
+The spread of prediction errors should remain consistent across all time periods and levels of predicted values. If the model predicts tea prices poorly during volatile periods like drought years but well during stable years, variance is not constant. A logarithmic or box-cox transformation may be needed before modeling.
+
+### Normality of Residuals
+
+The errors should follow a bell-shaped distribution. While point forecasts remain reliable without normality, this assumption is essential for valid confidence intervals, hypothesis tests, and prediction intervals. If there are extreme price spikes, like a sudden 50% price jump due to a major buyer entering the market, create heavy-tailed residuals, prediction intervals will be unreliable even if point forecasts are acceptable.
+
+### Linearity
+
+SARIMA assumes that future values are a linear combination of past values and past errors. It cannot capture nonlinear relationships, threshold effects, or regime switches. Tea prices may respond differently to a rainfall deficit depending on whether the market is already in a supply glut. SARIMA cannot capture such nonlinear dynamics.
+
+### Fixed and Known Seasonal Period
+
+You must know the length of the seasonal cycle in advance, and that length must remain constant. For monthly tea data, the seasonal period is 12. If tea harvesting patterns shift due to climate change, for instance, two rainy seasons merging into one, the fixed 12-month seasonality no longer aligns with reality.
+
+### Stable Seasonal Pattern
+
+The strength and shape of the seasonal pattern must remain consistent over time. Seasonal peaks and troughs should maintain similar magnitude and timing. If climate change causes the main tea harvest to shift from June to May over a decade, the seasonal pattern is not stable. SARIMA would misalign over time.
+
+### No Structural Breaks
+
+The underlying process generating the data must remain stable throughout the period. SARIMA cannot handle sudden policy changes, major economic events, changes in trend direction, or shifts in seasonal behavior. In 2023, Kenya introduced a new tea auction floor system that altered price-discovery mechanisms. Such a structural break violates the assumption of a stable data-generating process. Hence, SARIMA models trained with data predating 2023 would struggle to predict prices post 2023.
+
+### No Outliers or Level Shifts
+
+The data should not contain extreme observations or sudden jumps to new levels that do not revert. A single outlier, such as a month where prices doubled due to a panic buy by a major importer, can distort parameter estimates and create misleading autocorrelation patterns.
+
+## Limitations
+### Manual Specification Complexity
+
+Selecting the correct combination of parameters $(p, d, q, P, D, Q, s)$ requires experience and careful analysis. The search space is enormous, and poor choices lead to underfitting or overfitting. A novice analyst might choose the wrong seasonal order for tea prices, failing to capture the post-harvest price dip, resulting in systematic forecast errors.
+
+### Large Data Requirements
+
+SARIMA needs enough data to reliably estimate seasonal patterns, at least four to five full seasonal cycles. For monthly tea data, this means four to five years of observations. If a researcher attempts to model tea prices using only 18 months of data, the seasonal component cannot be reliably estimated.
+
+### Single Seasonality Only
+
+Standard SARIMA can only handle one seasonal pattern at a time. Data with multiple seasonal cycles cannot be adequately modeled without extensions or alternative approaches. If tea prices exhibited both a 12-month cycle and a 6-month intra-year pattern related to two harvest seasons, SARIMA could only model one.
+
+### Forecast Horizon Degradation
+
+Forecasts become increasingly uncertain as you project further into the future. SARIMA works best for short-term forecasting. A SARIMA model may forecast next month's tea price reasonably well but will likely converge to the average seasonal pattern with wide confidence intervals when forecasting two years ahead.
+
+### Univariate Only
+
+Standard SARIMA uses only the past values of the series itself to make predictions. It cannot incorporate external information that might improve forecasts. A model for tea prices would be stronger if it could include rainfall in tea-growing regions, global crude oil prices (affecting transport), or exchange rate movements. Standard SARIMA cannot do this.
+
+### Fixed Parameters
+
+Once estimated, model parameters remain constant over time. The model cannot adapt to gradual changes in trends or evolving seasonal patterns without periodic re-estimation or rolling window approaches. As Kenyan tea gradually gains premium branding in export markets, the long-term price trend may steepen. A SARIMA model estimated a decade ago would not adapt to this change unless re-estimated.
+
+## Overcoming SARIMA's Limitations
+
+### SARIMAX
+
+By including exogeneous variables it overcomes SARIMA's limitations of being univariate only. It will incorporate rainfall data, global tea price index, and fuel costs as exogenous variables to improve forecast accuracy of tea prices. However, it still assumes single seasonality, still requires manual parameter selection, and coefficients remain fixed.
+
+### TBATS (Trigonometric Box-Cox ARMA Trend Seasonal)
+
+It handles multiple seasonal period and allows seasonality to evolve over time. If tea prices show both a 12-month cycle and a secondary 6-month cycle related to two harvest seasons, TBATS can model both simultaneously. It is, however, univariate only and does not easily incorporate external drivers.
+
+### Prophet
+
+It is designed for business forecasting with automatic changepoint detection, multiple seasonalities, and simple tuning. It automatically detects when the price trend shifted due to policy changes like the 2023 auction system change. It also incorporates holiday effects (Ramadan demand spikes), handles yearly and monthly seasonalities, and allows inclusion of weather variables as regressors. It still has a linear additive structure, and may require regularization to avoid overfitting.
+
+## Summary
+
+SARIMA remains a powerful and interpretable model for univariate time series with a single, stable seasonal pattern and no structural breaks. However, for complex real-world data, such as Mombasa tea prices, which may involve multiple seasonalities, external drivers, structural breaks, and evolving seasonal patterns, practitioners should consider SARIMAX, TBATS, or Prophet depending on the specific limitations they face.

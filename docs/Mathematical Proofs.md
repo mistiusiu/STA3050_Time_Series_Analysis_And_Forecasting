@@ -184,7 +184,7 @@ Y_t = c \sum_{i=0}^{t-1} \phi^i + \phi^t Y_0
 </div>
 
 
-The convergence of the series is the [[Mathematical Proofs#Method of Telescoping Sums|Method of Telescoping Sums]].
+The convergence of the series is the [[Mathematical Proofs#Method of Telescoping Sums|method of telescoping sums]].
 
 ### Vieta's Formulas for AR(2) Model
 
