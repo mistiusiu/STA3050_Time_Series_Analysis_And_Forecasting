@@ -70,20 +70,6 @@ The partial autocorrelation function (PACF) measures the direct correlation betw
 
 If data has seasonality, the PACF will exhibit significant spikes at seasonal lags ($S$, $2S$, $3S$). For the mango sales data ($S = 12$), this means strong spikes at lags 12 and 24. A gradual decay in the seasonal lags suggests seasonal non-stationarity of the data requiring seasonal differencing ($D$). A sharp cutoff at seasonal lags suggests the presence of a seasonal AR component ($P$). The identified AR order that will remove the non-seasonal and seasonal non stationary effects is the last lag before the PACF spikes "cut off" and hit the blue significance zone. Hence, ACF is used to identify the non-seasonal MA order ($p$) at early lags and the seasonal MA order ($P$) at seasonal lags.
 
-To illustrate this $MA(1)$ and $MA(2)$ models will be simulated.
-
-![Simulated MA(1) data](https://online.stat.psu.edu/stat510/Lesson02_files/figure-html/fig-simulatedMA1-1.png)
-
-The ACF plot is
-
-![ACF for simulated MA(1) data](https://online.stat.psu.edu/stat510/Lesson02_files/figure-html/fig-ACFsimulated-1.png)
-
-For $MA(2)$
-
-![Simulated MA(2) Series](https://online.stat.psu.edu/stat510/Lesson02_files/figure-html/fig-simulatedtimeseries-1.png)
-
-![ACF for simulated MA(2) Data](https://online.stat.psu.edu/stat510/Lesson02_files/figure-html/fig-ACFforma2-1.png)
-
 ## Model Notation
 
 Seasonal and non-seasonal components are incorporated in a multiplicative model.
@@ -169,7 +155,9 @@ Note that in this notation there is no constant $c$. This occurs from the choice
 \]
 </div>
 
+
 ## Assumptions
+
 ### Stationarity After Differencing
 
 After applying regular and seasonal differencing, the series must have a constant mean and constant autocovariance that depends only on lag $h$, not on time $t$. This is the mathematical foundation of SARIMA modeling. Mombasa tea prices often exhibit an upward trend due to inflation and global demand, and seasonal peaks after harvests. Differencing removes the trend and stabilizes the seasonal pattern. If the variance grows over time (price volatility increases with inflation), this assumption fails.
@@ -207,6 +195,7 @@ The underlying process generating the data must remain stable throughout the per
 The data should not contain extreme observations or sudden jumps to new levels that do not revert. A single outlier, such as a month where prices doubled due to a panic buy by a major importer, can distort parameter estimates and create misleading autocorrelation patterns.
 
 ## Limitations
+
 ### Manual Specification Complexity
 
 Selecting the correct combination of parameters $(p, d, q, P, D, Q, s)$ requires experience and careful analysis. The search space is enormous, and poor choices lead to underfitting or overfitting. A novice analyst might choose the wrong seasonal order for tea prices, failing to capture the post-harvest price dip, resulting in systematic forecast errors.
