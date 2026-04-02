@@ -1,12 +1,12 @@
 ## Preamble
 
-Before exploring this content ensure that you have brushed up on [[Stationarity]] , [[AR Model]], [[MA Model]], [[ARMA Model]],  and the [[ARIMA Model]]. If any mathematical notation or expansion feels unfamiliar explore the linked [[Mathematical Proofs|proofs]] content.
+Before exploring this content ensure that you have brushed up on [[Mathematical Proofs#Stationarity|Stationarity]] , [[AR Model]], [[MA Model]], [[ARMA Model]],  and the [[ARIMA Model]]. If any mathematical notation or expansion feels unfamiliar explore the linked [[Mathematical Proofs|proofs]] content.
 
 ## Introduction
 
 In a seasonal ARIMA model, seasonal AR and MA terms predict $x_t$ using data values and errors that are multiples of S (the span of the seasonality).
 
-For example, if `S = 12` and $x_t$ is March 2026 then a seasonal first order autoregressive model AR(1) will use $x_{t-12}$ to predict $x_t$ where $x_{t-12}$ is March 2025. Similarly, a second order autoregressive model AR(2) will use $x_{t-12}$ and $x_{t-24}$ to predict $x_t$. Hence it will use March 2025 and March 2024. In the same vein, a seasonal first order moving average and second order moving average model, MA(1) and MA(2) respectively, will use $w_{t-12}$, and $w_{t-12}$ and $w_{t-24}$ respectively to predict $w_{t}$.
+For example, if $S = 12$ and $x_t$ is March 2026 then a seasonal first order autoregressive model AR(1) will use $x_{t-12}$ to predict $x_t$ where $x_{t-12}$ is March 2025. Similarly, a second order autoregressive model AR(2) will use $x_{t-12}$ and $x_{t-24}$ to predict $x_t$. Hence it will use March 2025 and March 2024. In the same vein, a seasonal first order moving average and second order moving average model, MA(1) and MA(2) respectively, will use $w_{t-12}$, and $w_{t-12}$ and $w_{t-24}$ respectively to predict $w_{t}$.
 
 ## Differencing
 
@@ -14,7 +14,7 @@ Seasonality often causes data to lack stationarity (not be stationary). This is 
 
 ### Seasonal Differencing
 
-With `S = 12`, which may occur with monthly data, a seasonal difference using the [[Mathematical Proofs#Backshift Operator|Backshift Operator]] would be:
+With $S = 12$, which may occur with monthly data, a seasonal difference using the [[Mathematical Proofs#Backshift Operator|Backshift Operator]] would be:
 
 
 <div class="arithmatex">
@@ -31,7 +31,7 @@ The logic behind this differencing is that since the patterns in the data are ob
 Seasonal differencing eliminates the seasonal patterns. The mango sales data during peak mango season is a seasonal pattern that repeats every 12 months. A non-seasonal differencing cannot eliminate such a pattern. Only the general trend is eliminated but the seasonal peaks remain.
 
 Moreover, when a time series' present value is strongly linked with its value from the same season in the prior year, it has a seasonal unit root. In mango sales data the peak season is January (to March). Thus, the sales in January 2026 are strongly influenced by the sales in January 2025. A seasonal unit root represents that the value of $|\Phi| = 1$ meaning it falls within the unit circle. This means that the sales of consecutive years is the sale of the previous years plus a shock causing the effect to diverge towards infinity exhibiting non-stationarity. However, in a stationary series that is effected by shifting the question from "What are my sales in January 2026?" to "How many more or less mangos did I sell this January (2026) compared to January last year (2025)?". This can only be stabilized by
-seasonal differencing, not by standard differencing. This is further explored in [[Stationarity|stationarity]].
+seasonal differencing, not by standard differencing. This is further explored in [[Mathematical Proofs#Stationarity|stationarity]].
 
 Hence, seasonal differencing creates a stationary seasonal pattern. This converts data with multiplicative seasonality into an additive stationary form.
 
