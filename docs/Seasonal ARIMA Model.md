@@ -62,6 +62,14 @@ ought to be examined. This effectively breaks down the dependency into recent th
 
 By examining the ACF and PACF behavior over the first few lags (less than S) the non-seasonal terms that might work in further refining the model can be determined (the ACF and PACF plots effectively plot the residuals). A case in point is if the ACF still shows huge spikes at lag 12, it means the periodic component wasn't fully removed, and you might need a more complex seasonal model (like a Seasonal MA term).
 
+## Patterns in ACF and PACF
+
+The autocorrelation function (ACF) measures the correlation between observations separated by different time lags. If data has seasonality, the ACF will exhibit significant spikes at seasonal lags ($S$, $2S$, $3S$). For the mango sales data ($S = 12$), this means strong spikes at lags 12 and 24. A gradual decay in the seasonal lags suggests seasonal non-stationarity of the data requiring seasonal differencing ($D$). A sharp cutoff at seasonal lags suggests the presence of a seasonal MA component. Hence, ACF is used to identify the non-seasonal MA order ($q$) at early lags and the seasonal MA order ($Q$) at seasonal lags.
+
+The partial autocorrelation function (PACF) measures the direct correlation between observations after removing the effects of intermediate lag variables. It effectually asks the question _"Does knowing what happened two days ago tell me anything that knowing what happened yesterday didn't already cover?"_. If the answer is no then the PACF is 0. 
+
+If data has seasonality, the PACF will exhibit significant spikes at seasonal lags ($S$, $2S$, $3S$). For the mango sales data ($S = 12$), this means strong spikes at lags 12 and 24. A gradual decay in the seasonal lags suggests seasonal non-stationarity of the data requiring seasonal differencing ($D$). A sharp cutoff at seasonal lags suggests the presence of a seasonal AR component ($P$). The identified AR order that will remove the non-seasonal and seasonal non stationary effects is the last lag before the PACF spikes "cut off" and hit the blue significance zone. Hence, ACF is used to identify the non-seasonal MA order ($p$) at early lags and the seasonal MA order ($P$) at seasonal lags.
+
 ## Model Notation
 
 Seasonal and non-seasonal components are incorporated in a multiplicative model.
